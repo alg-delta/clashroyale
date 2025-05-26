@@ -1,0 +1,110 @@
+// Модальне вікно старт
+let openModal = document.querySelectorAll(".banner-btn-explore");
+let closeModal = document.querySelector(".close-modal");
+let modalBtn = document.querySelector(".modal-btn");
+let modalWrapper = document.querySelector(".modal-wrapper");
+//console.log(openModal);
+//console.log(closeModal);
+//console.log(modalBtn);
+//console.log(modalWrapper);
+
+for (let open of openModal) {
+  open.addEventListener("click", function () {
+    modalWrapper.style.display = "flex";
+  });
+}
+
+closeModal.addEventListener("click", function () {
+  modalWrapper.style.display = "none";
+});
+modalBtn.addEventListener("click", function () {
+  modalWrapper.style.display = "none";
+});
+
+modalWrapper.addEventListener("click", function () {
+  if (event.target === modalWrapper) {
+    modalWrapper.style.display = "none";
+  }
+});
+
+// ТАБИ
+let tabs = document.querySelectorAll(".tab");
+let cards = document.querySelectorAll(".card");
+
+for (let tab of tabs) {
+  tab.addEventListener("click", onClickTab);
+}
+
+function onClickTab(event) {
+  let activeTab = event.target;
+  for (let tab of tabs) {
+    tab.classList.remove("tabs-active");
+  }
+  activeTab.classList.add("tabs-active");
+
+  let filter = activeTab.getAttribute("data-target");
+  console.log(filter);
+
+  for (let card of cards) {
+    let cardID = card.getAttribute("data-id");
+    if (filter === cardID) {
+      card.style.display = "flex";
+    } else {
+      card.style.display = "none";
+    }
+  }
+}
+for (let card of cards) {
+  let cardID = card.getAttribute("data-id");
+  if ("centre" === cardID) {
+    card.style.display = "flex";
+  } else {
+    card.style.display = "none";
+  }
+}
+
+// Слайдер
+let slides = document.querySelectorAll(".slide");
+let dots = document.querySelectorAll(".dot");
+let sliderNext = document.querySelector(".nextBtn");
+let sliderBack = document.querySelector(".backBtn");
+//console.log(slides);
+//console.log(dots);
+//console.log(sliderNext);
+//console.log(sliderBack);
+
+let activeSlide = 0;
+
+showSlide(activeSlide);
+
+function showSlide(n) {
+  if (n > slides.length - 1) {
+    activeSlide = 0;
+  }
+
+  if (n < 0) {
+    activeSlide = slides.length - 1;
+  }
+  for (let i = 0; i < slides.length; i = i + 1) {
+    slides[i].style.display = "none";
+    dots[i].classList.remove("active");
+  }
+  slides[activeSlide].style.display = "flex";
+  dots[activeSlide].classList.add("active");
+}
+
+sliderNext.addEventListener("click", function () {
+  activeSlide = activeSlide + 1;
+  showSlide(activeSlide);
+});
+
+sliderBack.addEventListener("click", function () {
+  activeSlide = activeSlide - 1;
+  showSlide(activeSlide);
+});
+for (let i = 0; i < slides.length; i = i + 1) {
+  dots[i].addEventListener("click", function () {
+    activeSlide = i;
+    showSlide(activeSlide);
+  });
+}
